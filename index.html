@@ -188,7 +188,14 @@ function saveStory() {
 }
 </script>
 
-</body><h2>Choisis ton fruit préféré !</h2>
+</body><h2>📖 Crée ton histoire !</h2>
+
+<button onclick="
+let fruit = document.getElementById('fruit').value;
+alert('Une nouvelle histoire avec ' + fruit + ' arrive bientôt !');
+">
+Créer mon histoire ✨
+</button><h2>Choisis ton fruit préféré !</h2>
 
 <select id="fruit">
   <option>🍌 Banane</option>
