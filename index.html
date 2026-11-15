@@ -1,237 +1,141 @@
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FruitStory AI</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff4e8;
-      text-align: center;
-      color: #333;
-    }
-    header {
-      background: #ff7043;
-      color: white;
-      padding: 25px;
-    }
-    main {
-      padding: 25px;
-    }
-    button {
-      background: #ff7043;
-      color: white;
-      border: 0;
-      padding: 14px 22px;
-      border-radius: 12px;
-      font-size: 17px;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>🍓 FruitStory AI</h1>
-    <p>Les histoires amusantes des fruits !</p>
-  </header>
-  <main>
-    <h2>Bienvenue sur FruitStory AI</h2>
-    <p>Découvre des personnages fruits et leurs aventures.</p>
-    <button onclick="alert('Bienvenue dans FruitStory AI !')">
-      Commencer
-    </button>
-  </main>
-</body>
-</html>
+< 
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FruitStory AI</title>
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #17112f;
-  color: white;
-  text-align: center;
-}
-header {
-  padding: 25px;
-  background: #292044;
-}
-h1 { color: #ffcf70; }
-main {
-  max-width: 550px;
-  margin: 25px auto;
-  padding: 20px;
-}
-.card {
-  background: #292044;
-  padding: 22px;
-  border-radius: 18px;
-}
-select, textarea, button {
-  width: 100%;
-  padding: 13px;
-  margin: 9px 0;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
-}
-textarea { min-height: 100px; }
-button {
-  background: #ff6b9b;
-  color: #24102a;
-  font-weight: bold;
-}
-#result {
-  background: #17112f;
-  padding: 15px;
-  border-radius: 10px;
-  white-space: pre-wrap;
-  text-align: left;
-}
-</style>
-</head>
-<body>
+  <option value="mystère">🔎 Mystère</option>
+  <option value="magie">✨ Magie</option>
+  <option value="action">⚡ Action</option>
+</select>
 
-<header>
-<h1>🍓 FruitStory AI</h1>
-<p>Crée tes histoires avec les fruits !</p>
-</header>
+<label for="idea">Ton idée d'histoire (facultatif)</label>
+<textarea id="idea" placeholder="Exemple : une fraise découvre un monde secret..."></textarea>
 
-<main>
+<button onclick="createStory()">✨ Créer mon histoire</button>
+
+<div id="result"></div>
+</div>
+
 <div class="card">
-<h2>🎬 Créer une vidéo</h2>
-
-<select id="fruit">
-<option>🍌 Banane</option>
-<option>🍓 Fraise</option>
-<option>🍎 Pomme</option>
-<option>🍉 Pastèque</option>
-<option>🍍 Ananas</option>
-</select>
-
-<select id="style">
-<option>Drôle et comique</option>
-<option>Aventure</option>
-<option>Mystère</option>
-</select>
-
-<textarea id="idea"
-placeholder="Écris ton dialogue ou ton idée..."></textarea>
-
-<button onclick="createStory()">
-✨ Créer mon histoire
-</button>
-
-<h3>📖 Mon scénario</h3>
-<div id="result">
-Ton histoire apparaîtra ici.
+<h2>📚 Mes histoires sauvegardées</h2>
+<div id="savedStories"></div>
 </div>
 
-<button onclick="saveStory()">
-💾 Enregistrer mon projet
-</button>
+<footer>🍓 Frutanzia — Imagine, crée et raconte !</footer>
 
 </div>
-</main>
 
 <script>
-let story = "";
-
 function createStory() {
   const fruit = document.getElementById("fruit").value;
   const style = document.getElementById("style").value;
-  const idea = document.getElementById("idea").value;
+  const idea = document.getElementById("idea").value.trim();
 
-  if (!idea.trim()) {
-    alert("Écris d'abord ton idée !");
-    return;
-  }
+  const openings = {
+    comique: "Un jour, tout le monde se mit à rire dans le royaume des fruits.",
+    aventure: "Un matin, une grande aventure commença dans la forêt magique.",
+    "amitié": "Dans un petit village, une belle amitié allait naître.",
+    mystère: "Un étrange secret venait d'être découvert.",
+    magie: "Une mystérieuse lumière magique apparut dans le ciel.",
+    action: "Une mission importante venait de commencer."
+  };
 
-  story =
-    "FRUITSTORY AI 🍓\n\n" +
-    "Personnage : " + fruit + "\n" +
-    "Style : " + style + "\n\n" +
-    "SCÈNE 1\n" + idea +
-    "\n\nSCÈNE 2\n" +
-    fruit + " : Que va-t-il se passer maintenant ?\n\n" +
-    "FIN : À suivre !";
+  const story = `${fruit} était un personnage très courageux.
 
-  document.getElementById("result").textContent = story;
+${openings[style]}
+
+${idea || "Il décida de partir à la découverte d'un monde merveilleux."}
+
+Sur son chemin, il rencontra de nouveaux amis et surmonta plusieurs défis.
+
+À la fin, il découvrit que le courage et l'amitié pouvaient tout changer.
+
+🌟 FIN 🌟`;
+
+  document.getElementById("result").innerHTML = `
+    <div class="story">
+      <h3>🎬 Ton histoire</h3>
+      <p>${escapeHTML(story)}</p>
+      <button onclick="saveStory()">💾 Sauvegarder</button>
+    </div>
+  `;
+
+  window.currentStory = story;
+}
+
+function escapeHTML(text) {
+  return text.replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
 }
 
 function saveStory() {
-  if (!story) {
-    alert("Crée d'abord une histoire !");
+  if (!window.currentStory) return;
+
+  const stories = JSON.parse(
+    localStorage.getItem("frutanziaStories") || "[]"
+  );
+
+  stories.unshift(window.currentStory);
+
+  localStorage.setItem(
+    "frutanziaStories",
+    JSON.stringify(stories)
+  );
+
+  showStories();
+  alert("Histoire sauvegardée !");
+}
+
+function showStories() {
+  const stories = JSON.parse(
+    localStorage.getItem("frutanziaStories") || "[]"
+  );
+
+  const area = document.getElementById("savedStories");
+
+  if (stories.length === 0) {
+    area.textContent = "Aucune histoire sauvegardée pour le moment.";
     return;
   }
 
-  let projects = JSON.parse(
-    localStorage.getItem("fruitProjects") || "[]"
+  area.innerHTML = "";
+
+  stories.forEach((story, index) => {
+    const item = document.createElement("div");
+    item.className = "saved-story";
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = story;
+
+    const button = document.createElement("button");
+    button.textContent = "🗑️ Supprimer";
+    button.onclick = () => deleteStory(index);
+
+    item.append(paragraph, button);
+    area.appendChild(item);
+  });
+}
+
+function deleteStory(index) {
+  const stories = JSON.parse(
+    localStorage.getItem("frutanziaStories") || "[]"
   );
 
-  projects.push(story);
+  stories.splice(index, 1);
 
   localStorage.setItem(
-    "fruitProjects",
-    JSON.stringify(projects)
+    "frutanziaStories",
+    JSON.stringify(stories)
   );
 
-  alert("Projet enregistré !");
+  showStories();
 }
+
+showStories();
 </script>
 
-</body><script>
-function creerHistoire() {
-  let fruit = document.getElementById("fruit").value;
-
-  document.getElementById("histoire").innerHTML =
-    "<h2>📖 Une aventure avec " + fruit + "</h2>" +
-    "<p>Un beau matin, " + fruit +
-    " décida de partir à la découverte d'un monde magique. " +
-    "Une grande aventure commençait ! 🍓✨</p>";
-}
-</script><div id="histoire" style="margin:20px; padding:15px; background:#fff3d6; border-radius:12px;">
-  <h2>📖 Ton histoire apparaîtra ici !</h2>
-  <p>Choisis un fruit et crée ton aventure.</p>
-</div><h2>📖 Crée ton histoire !</h2>
-
-<button onclick="
-let fruit = document.getElementById('fruit').value;
-alert('Une nouvelle histoire avec ' + fruit + ' arrive bientôt !');
-">
-Créer mon histoire ✨
-</button><h2>Choisis ton fruit préféré !</h2>
-
-<select id="fruit">
-  <option>🍌 Banane</option>
-  <option>🍓 Fraise</option>
-  <option>🍉 Pastèque</option>
-  <option>🍍 Ananas</option>
-  <option>🍎 Pomme</option>
-</select>
-
-<button onclick="alert('Ton fruit est choisi !')">
-  Choisir mon fruit<button onclick="creerHistoire()">
-</button><div<div style="text-align:center; padding:30px; font-family:Arial;">
-  <h1>🍓 Bienvenue sur FruitStory AI !</h1>
-  <p>Découvre des histoires amusantes avec tes fruits préférés.</p>
-  <p>Crée des images, invente des aventures et amuse-toi !</p>
-  <button onclick="alert('Bienvenue dans FruitStory AI !')">
-    COMMENCER 🚀
-  </button>
-</div> style="text-align:center; padding:30px; font-family:Arial;">
-  <h1>🍓 FruitStory AI</h1>
-  <p>Bienvenue dans le monde des histoires de fruits !</p>
-  <button onclick="alert('Bienvenue sur FruitStory !')">
-    Commencer
-  </button>
-</div>
+</body>
 </html>
