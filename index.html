@@ -188,7 +188,17 @@ function saveStory() {
 }
 </script>
 
-</body><div id="histoire" style="margin:20px; padding:15px; background:#fff3d6; border-radius:12px;">
+</body><script>
+function creerHistoire() {
+  let fruit = document.getElementById("fruit").value;
+
+  document.getElementById("histoire").innerHTML =
+    "<h2>📖 Une aventure avec " + fruit + "</h2>" +
+    "<p>Un beau matin, " + fruit +
+    " décida de partir à la découverte d'un monde magique. " +
+    "Une grande aventure commençait ! 🍓✨</p>";
+}
+</script><div id="histoire" style="margin:20px; padding:15px; background:#fff3d6; border-radius:12px;">
   <h2>📖 Ton histoire apparaîtra ici !</h2>
   <p>Choisis un fruit et crée ton aventure.</p>
 </div><h2>📖 Crée ton histoire !</h2>
