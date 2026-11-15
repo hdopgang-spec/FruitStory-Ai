@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FruitStory AI</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #17112f;
+  color: white;
+  text-align: center;
+}
+header {
+  padding: 25px;
+  background: #292044;
+}
+h1 { color: #ffcf70; }
+main {
+  max-width: 550px;
+  margin: 25px auto;
+  padding: 20px;
+}
+.card {
+  background: #292044;
+  padding: 22px;
+  border-radius: 18px;
+}
+select, textarea, button {
+  width: 100%;
+  padding: 13px;
+  margin: 9px 0;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+textarea { min-height: 100px; }
+button {
+  background: #ff6b9b;
+  color: #24102a;
+  font-weight: bold;
+}
+#result {
+  background: #17112f;
+  padding: 15px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  text-align: left;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🍓 FruitStory AI</h1>
+<p>Crée tes histoires avec les fruits !</p>
+</header>
+
+<main>
+<div class="card">
+<h2>🎬 Créer une vidéo</h2>
+
+<select id="fruit">
+<option>🍌 Banane</option>
+<option>🍓 Fraise</option>
+<option>🍎 Pomme</option>
+<option>🍉 Pastèque</option>
+<option>🍍 Ananas</option>
+</select>
+
+<select id="style">
+<option>Drôle et comique</option>
+<option>Aventure</option>
+<option>Mystère</option>
+</select>
+
+<textarea id="idea"
+placeholder="Écris ton dialogue ou ton idée..."></textarea>
+
+<button onclick="createStory()">
+✨ Créer mon histoire
+</button>
+
+<h3>📖 Mon scénario</h3>
+<div id="result">
+Ton histoire apparaîtra ici.
+</div>
+
+<button onclick="saveStory()">
+💾 Enregistrer mon projet
+</button>
+
+</div>
+</main>
+
+<script>
+let story = "";
+
+function createStory() {
+  const fruit = document.getElementById("fruit").value;
+  const style = document.getElementById("style").value;
+  const idea = document.getElementById("idea").value;
+
+  if (!idea.trim()) {
+    alert("Écris d'abord ton idée !");
+    return;
+  }
+
+  story =
+    "FRUITSTORY AI 🍓\n\n" +
+    "Personnage : " + fruit + "\n" +
+    "Style : " + style + "\n\n" +
+    "SCÈNE 1\n" + idea +
+    "\n\nSCÈNE 2\n" +
+    fruit + " : Que va-t-il se passer maintenant ?\n\n" +
+    "FIN : À suivre !";
+
+  document.getElementById("result").textContent = story;
+}
+
+function saveStory() {
+  if (!story) {
+    alert("Crée d'abord une histoire !");
+    return;
+  }
+
+  let projects = JSON.parse(
+    localStorage.getItem("fruitProjects") || "[]"
+  );
+
+  projects.push(story);
+
+  localStorage.setItem(
+    "fruitProjects",
+    JSON.stringify(projects)
+  );
+
+  alert("Projet enregistré !");
+}
+</script>
+
+</body>
+</html>
